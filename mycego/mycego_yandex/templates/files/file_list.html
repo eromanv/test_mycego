@@ -1,26 +1,29 @@
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Получить список файлов</button>
-  </form>
-  
-  {% if files %}
-    <h2>Список файлов:</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Название</th>
-          <th>Действие</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for file in files %}
-        <tr>
-          <td>{{ file.name }}</td>
-          <td><a href="{% url 'download_file' public_key=request.POST.public_key file_path=file.path %}">Скачать</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}
-  
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<form method="POST" class="mt-4">
+  {% csrf_token %}
+  <div class="form-group">
+      {{ form.as_p }}
+  </div>
+  <button type="submit" class="btn btn-primary">Получить список файлов</button>
+</form>
+
+{% if files %}
+<h2 class="mt-5">Список файлов:</h2>
+<table class="table table-striped mt-3">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Название</th>
+      <th scope="col">Действие</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in files %}
+    <tr>
+      <td>{{ file.name }}</td>
+      <td><a href="{{ public_key }}/{{ file.path }}" class="btn btn-sm btn-success">Скачать</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
