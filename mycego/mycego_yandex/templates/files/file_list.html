@@ -1,0 +1,26 @@
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Получить список файлов</button>
+  </form>
+  
+  {% if files %}
+    <h2>Список файлов:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+        <tr>
+          <td>{{ file.name }}</td>
+          <td><a href="{% url 'download_file' public_key=request.POST.public_key file_path=file.path %}">Скачать</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  
